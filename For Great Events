@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Great Events</title>
+  <!-- Ícone do site -->
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f389.svg" type="image/svg+xml">
+  <!-- Fonte Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Biblioteca de animação ao scroll -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <!-- Meta description para SEO -->
+  <meta name="description" content="For Great Events - Organização de eventos, casamentos, design floral e eventos corporativos. Transformamos emoções em experiências memoráveis.">
+  <style>
+    /* ===================== VARIÁVEIS DE COR ===================== */
+    :root {
+      --primary: #003366;
+      --secondary: #007399;
+      --accent: #f9b233;
+      --bg: #ffffff;
+      --gray: #f0f0f0;
+    }
+    /* ===================== BASE ===================== */
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: #1a1a1a;
+      background-color: var(--bg);
+      scroll-behavior: smooth;
+    }
+    /* ===================== HEADER ===================== */
+    header {
+      background: linear-gradient(to right, var(--secondary), var(--primary));
+      color: white;
+      padding: 40px 20px 20px 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      z-index: 2;
+    }
+    header img {
+      max-width: 120px;
+      margin-bottom: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+    }
+    header img:hover {
+      transform: scale(1.05) rotate(-2deg);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.7em;
+      letter-spacing: 1px;
+    }
+    header p {
+      font-size: 1.2em;
+      margin-top: 10px;
+      opacity: 0.95;
+    }
+    /* ===================== NAVEGAÇÃO ===================== */
+    nav {
+      text-align: center;
+      background-color: var(--gray);
+      padding: 12px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav a {
+      margin: 0 18px;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.05em;
+      transition: color 0.2s;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width .3s;
+      margin: 0 auto;
+    }
+    nav a:hover {
+      color: var(--secondary);
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    /* ===================== SECÇÕES ===================== */
+    section {
+      padding: 60px 20px;
+      max-width: 950px;
+      margin: auto;
+      text-align: center; /* Centraliza o texto das secções */
+    }
+    section h2 {
+      color: var(--primary);
+      margin-bottom: 24px;
+      font-size: 2em;
+      letter-spacing: 0.5px;
+      text-align: center; /* Centraliza os títulos */
+    }
+    /* ===================== SERVIÇOS E TESTEMUNHOS EM GRID ===================== */
+    .services, .testimonials-carousel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      justify-items: center;
+    }
+    .services div {
+      background: var(--gray);
+      border-radius: 10px;
+      padding: 28px 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      cursor: pointer;
+      text-align: left; /* Cartões alinhados à esquerda */
+    }
+    .services div:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      background: #fffbe8;
+    }
+    .services i {
+      font-size: 2em;
+      color: var(--accent);
+      margin-top: 2px;
+      transition: color 0.2s;
+    }
+    .services div:hover i {
+      color: var(--secondary);
+    }
+    /* ===================== CARROSSEL DE TESTEMUNHOS ===================== */
+    .testimonials-carousel {
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+    }
+    .testimonial-slide {
+      background: #fff;
+      border-left: 5px solid var(--accent);
+      border-radius: 8px;
+      padding: 22px 18px;
+      font-style: italic;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      transition: box-shadow 0.2s, opacity 0.5s;
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      pointer-events: none;
+      text-align: left;
+    }
+    .testimonial-slide.active {
+      opacity: 1;
+      position: relative;
+      pointer-events: auto;
+      z-index: 2;
+    }
+    .testimonial-controls {
+      text-align: center;
+      margin-top: 12px;
+    }
+    .testimonial-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 0 4px;
+      background: var(--gray);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: 2px solid var(--accent);
+    }
+    .testimonial-dot.active {
+      background: var(--accent);
+    }
+    /* ===================== CHAMADA PARA AÇÃO ===================== */
+    .cta {
+      background-color: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 48px 20px;
+      border-radius: 0 0 24px 24px;
+      margin-bottom: 40px;
+    }
+    .cta a {
+      background: var(--accent);
+      color: var(--primary);
+      padding: 14px 32px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      font-size: 1.1em;
+      margin-top: 18px;
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .cta a:hover {
+      background: #fff;
+      color: var(--secondary);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    }
+    /* ===================== FORMULÁRIO DE CONTACTO ===================== */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background: var(--gray);
+      padding: 32px 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      max-width: 480px;
+      margin: auto;
+      margin-bottom: 32px;
+    }
+    input, textarea, select {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: border 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border: 1.5px solid var(--secondary);
+      outline: none;
+    }
+    button {
+      background-color: var(--accent);
+      color: var(--primary);
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    button:hover {
+      background-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    }
+    /* ===================== LINKS SOCIAIS ===================== */
+    .social-links {
+      margin-top: 10px;
+      font-size: 1.3em;
+    }
+    header {
+  margin-top: 90px; /* Ajuste o valor conforme necessário */
+}
+    .social-links a {
+      color: var(--primary);
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    /* ===================== MAPA DE LOCALIZAÇÃO ===================== */
+    .map-container {
+      width: 100%;
+      max-width: 480px;
+      margin: 32px auto 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    /* ===================== BOTÃO FLUTUANTE WHATSAPP ===================== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      background: #25d366;
+      color: #fff;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      font-size: 2em;
+      transition: background 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .whatsapp-float:hover {
+      background: #128c7e;
+      transform: scale(1.08);
+    }
+    /* ===================== RODAPÉ ===================== */
+    footer {
+      background: var(--gray);
+      text-align: center;
+      padding: 24px 10px 16px 10px;
+      font-size: 1em;
+      color: #333;
+      border-top: 1px solid #e0e0e0;
+    }
+    footer em {
+      color: var(--secondary);
+    }
+    /* ===================== RESPONSIVIDADE ===================== */
+    @media (max-width: 800px) {
+      .services, .testimonials-carousel {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+      section {
+        padding: 40px 10px;
+      }
+      .cta {
+        padding: 32px 10px;
+      }
+    }
+    @media (max-width: 500px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+      section h2 {
+        font-size: 1.2em;
+      }
+      .cta a {
+        padding: 10px 18px;
+        font-size: 1em;
+      }
+      form {
+        padding: 18px 6px;
+      }
+      .whatsapp-float {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3em;
+        bottom: 12px;
+        right: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+    <!-- ===================== NAVEGAÇÃO ===================== --> 
+<!-- Adicione isto logo após o <body> -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav" style="background: var(--gray); box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+  <div class="container" style="max-width: 950px;">
+    <a class="navbar-brand d-flex align-items-center" href="#topo">
+      <img src="LogoPrincipal@2x.avif" alt="For Great Events logo" style="height:60px; margin-right:10px; border-radius:12px;">
+      <span style="font-weight:bold; color:var(--primary);">For Great Events</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto my-2 my-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+        <li class="nav-item"><a class="nav-link" href="#servicos">Serviços</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testemunhos">Testemunhos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Adicione o Bootstrap CSS e JS no <head> e antes do </body> -->
+<!-- No <head>: -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Antes do </body>: -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- ===================== HEADER ===================== -->
+  <header data-aos="fade-down">
+    <img src="LogoPrincipal@2x.avif" alt="For Great Events logo" loading="lazy">
+    <h1>For Great Events</h1>
+    <p>Criamos Momentos. Guardamos Emoções.</p>
+  </header>
+
+
+  <!-- ===================== SECÇÃO SOBRE ===================== -->
+  <section id="sobre" data-aos="fade-up">
+    <h2>Sobre Nós</h2>
+    <p>A For Great Events é uma empresa especializada na produção de eventos, oferecendo soluções 360º que combinam criatividade, tecnologia e execução excecional. Nasceu do sonho de transformar emoções em experiências memoráveis. A nossa equipa vive cada projeto com paixão e dedicação verdadeira.</p>
+  </section>
+
+  <!-- ===================== SECÇÃO SERVIÇOS ===================== -->
+  <section id="servicos" data-aos="fade-up" data-aos-delay="100">
+    <h2>Serviços</h2>
+    <div class="services">
+      <div>
+        <i class="fa-solid fa-heart" aria-label="Casamentos"></i>
+        <div><strong>Casamentos</strong><br>Experiências únicas e emocionantes.</div>
+      </div>
+      <div>
+        <i class="fa-solid fa-briefcase" aria-label="Eventos Corporativos"></i>
+        <div><strong>Eventos Corporativos</strong><br>Reforço de marca e celebrações empresariais.</div>
+      </div>
+      <div>
+        <i class="fa-solid fa-seedling" aria-label="Design Floral"></i>
+        <div><strong>Design Floral</strong><br>Decoração emocional e impactante.</div>
+      </div>
+      <div>
+        <i class="fa-solid fa-champagne-glasses" aria-label="Gestão Total"></i>
+        <div><strong>Gestão Total</strong><br>Coordenamos tudo com excelência.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECÇÃO TESTEMUNHOS ===================== -->
+  <section id="testemunhos" data-aos="fade-up" data-aos-delay="200">
+    <h2>Testemunhos</h2>
+    <div class="testimonials-carousel" id="testimonials-carousel">
+      <div class="testimonial-slide active">
+        “Foi mais do que um evento. Foi um sonho tornado real.” <br><strong>– Maria e Ricardo</strong>
+      </div>
+      <div class="testimonial-slide">
+        “Nunca imaginei que um evento pudesse emocionar assim.” <br><strong>– João M.</strong>
+      </div>
+      <div class="testimonial-slide">
+        “Profissionalismo e dedicação do início ao fim. Recomendo!” <br><strong>– Sofia L.</strong>
+      </div>
+      <div class="testimonial-slide">
+        “A decoração floral surpreendeu todos os convidados!” <br><strong>– Pedro & Ana</strong>
+      </div>
+    </div>
+    <div class="testimonial-controls" id="testimonial-controls">
+      <span class="testimonial-dot active" aria-label="Testemunho 1"></span>
+      <span class="testimonial-dot" aria-label="Testemunho 2"></span>
+      <span class="testimonial-dot" aria-label="Testemunho 3"></span>
+      <span class="testimonial-dot" aria-label="Testemunho 4"></span>
+    </div>
+  </section>
+
+  <!-- ===================== SECÇÃO CHAMADA PARA AÇÃO ===================== -->
+  <section class="cta" data-aos="zoom-in" data-aos-delay="300">
+    <h2>Queres criar algo memorável?</h2>
+    <p>Contacta-nos e transforma a tua ideia num momento eterno.</p>
+    <a href="#contacto"><i class="fa-solid fa-envelope"></i> Pedir Orçamento</a>
+  </section>
+
+  <!-- ===================== SECÇÃO CONTACTO ===================== -->
+  <section id="contacto" data-aos="fade-up" data-aos-delay="400">
+    <h2>Contacto</h2>
+    <form action="https://formspree.io/f/moqzrwdy" method="POST" autocomplete="on">
+      <input type="text" name="name" placeholder="O teu nome" required aria-label="Nome">
+      <input type="email" name="email" placeholder="O teu email" required aria-label="Email">
+      <select name="tipo-evento" required aria-label="Tipo de Evento">
+        <option value="">Tipo de Evento</option>
+        <option value="casamento">Casamento</option>
+        <option value="corporativo">Evento Corporativo</option>
+        <option value="outro">Outro</option>
+      </select>
+      <textarea name="mensagem" placeholder="Fala-nos sobre o teu evento" rows="5" required aria-label="Mensagem"></textarea>
+      <button type="submit"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
+    </form>
+    <div class="map-container">
+      <!-- Mapa de localização -->
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.654217883713!2d-8.571256724140193!3d41.032820371347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd247ead8580eb4b%3A0x48168b7c416da3c0!2sR.%20Fonte%20da%20Cova%2030%2C%20Grij%C3%B3!5e0!3m2!1spt-PT!2spt!4v1747918644877!5m2!1spt-PT!2spt" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa localização"></iframe>
+    </div>
+  </section>
+
+  <!-- ===================== BOTÃO FLUTUANTE WHATSAPP ===================== -->
+  <a class="whatsapp-float" href="https://wa.me/351939785392" target="_blank" aria-label="WhatsApp" title="Fala connosco no WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer>
+    &copy; 2025 For Great Events. Todos os direitos reservados. <br>
+    <em>Não fazemos eventos. Criamos aquilo que fica no coração.</em>
+    <div class="social-links">
+      <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:info@forgreatevents.pt" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+    
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <!-- AOS Animation JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Inicializa animações ao scroll
+    AOS.init();
+
+    // Carrossel de testemunhos
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.testimonial-dot');
+    let current = 0;
+    let interval = null;
+
+    function showSlide(idx) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === idx);
+        dots[i].classList.toggle('active', i === idx);
+      });
+      current = idx;
+    }
+
+    function nextSlide() {
+      let idx = (current + 1) % slides.length;
+      showSlide(idx);
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        showSlide(i);
+        resetInterval();
+      });
+    });
+
+    function resetInterval() {
+      clearInterval(interval);
+      interval = setInterval(nextSlide, 5000);
+    }
+
+    interval = setInterval(nextSlide, 5000);
+
+    // Mensagem de sucesso ao enviar formulário (UX)
+    document.querySelector('form').addEventListener('submit', function(e) {
+      setTimeout(() => {
+        alert('Mensagem enviada com sucesso! Obrigado pelo seu contacto.');
+      }, 500);
+    });
+  </script>
+</body>
+</html>
